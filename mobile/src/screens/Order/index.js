@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, SafeAreaView } from "react-native";
+import { View, StyleSheet } from "react-native";
 import api from "../../services/api";
 import Timeline from "react-native-timeline-flatlist";
 import {
