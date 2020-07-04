@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
-import { format } from "date-fns";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import api from "../../services/api";
 import Timeline from "react-native-timeline-flatlist";
 import {
@@ -14,10 +13,21 @@ export default function Order() {
   const [codigo, setCodigo] = useState(["OJ694488935BR"]);
   const [data, setData] = useState();
 
-  const renderDescription = (origem, destino) => {
+  const renderDescription = (origem, destino, local) => {
     const formatOrigem = String(origem).replace("Origem: ", "");
     const formatDestino = String(destino).replace("Destino: ", "");
+    const formatLocal = String(local).replace("Local: ", "");
 
+    if (!origem && !destino) {
+      return (
+        <Description>
+          <SectionDescription>
+            <TitleDescription>Local</TitleDescription>
+            <TextDescription>{formatLocal}</TextDescription>
+          </SectionDescription>
+        </Description>
+      );
+    }
     return (
       <Description>
         <SectionDescription>
@@ -41,12 +51,14 @@ export default function Order() {
 
       const history = response["0"];
 
-      const formatedData = history.map(({ data, status, origem, destino }) => ({
-        time: data.replace("Data  : ", "").split(" ", 1),
-        // time: data,
-        title: status,
-        description: renderDescription(origem, destino),
-      }));
+      const formatedData = history.map(
+        ({ data, status, origem, destino, local }) => ({
+          time: data.replace("Data  : ", "").split(" ", 1),
+          // time: data,
+          title: status,
+          description: renderDescription(origem, destino, local),
+        })
+      );
 
       setData(formatedData);
     }
@@ -83,6 +95,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   time: {
+    flexDirection: "column",
     textAlign: "center",
     backgroundColor: "gray",
     fontSize: 12,
