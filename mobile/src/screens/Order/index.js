@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import api from "../../services/api";
-import Timeline from "react-native-timeline-flatlist";
 import {
   SectionDescription,
   TitleDescription,
   Description,
   TextDescription,
 } from "./styles";
+import Timeline from "react-native-timeline-flatlist";
 
 export default function Order() {
   const [codigo, setCodigo] = useState(["OJ694488935BR"]);
@@ -78,6 +78,8 @@ export default function Order() {
         circleColor="#F45B69"
         innerCircle={"dot"}
         circleSize={18}
+        options={{ paddingTop: 5 }}
+        columnFormat={"single-column-left"}
       />
     </View>
   );
