@@ -1,22 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
-import api from "../../services/api";
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Image } from 'react-native';
+import api from '../../services/api';
 import {
+  Container,
   SectionDescription,
   TitleDescription,
   Description,
   TextDescription,
-} from "./styles";
-import Timeline from "react-native-timeline-flatlist";
+} from './styles';
+import Timeline from 'react-native-timeline-flatlist';
+import logoLight from '../../assets/myobject.png';
+import logoDark from '../../assets/myobject2.png';
 
 export default function Order() {
-  const [codigo, setCodigo] = useState(["OJ694488935BR"]);
+  const [codigo, setCodigo] = useState(['OJ694488935BR']);
   const [data, setData] = useState();
 
   const renderDescription = (origem, destino, local) => {
-    const formatOrigem = String(origem).replace("Origem: ", "");
-    const formatDestino = String(destino).replace("Destino: ", "");
-    const formatLocal = String(local).replace("Local: ", "");
+    const formatOrigem = String(origem).replace('Origem: ', '');
+    const formatDestino = String(destino).replace('Destino: ', '');
+    const formatLocal = String(local).replace('Local: ', '');
 
     if (!origem && !destino) {
       return (
@@ -49,11 +52,11 @@ export default function Order() {
         data: { response },
       } = await api.get(`/${codigo}`);
 
-      const history = response["0"];
+      const history = response['0'];
 
       const formatedData = history.map(
         ({ data, status, origem, destino, local }) => ({
-          time: data.replace("Data  : ", "").split(" ", 1),
+          time: data.replace('Data  : ', '').split(' ', 1),
           // time: data,
           title: status,
           description: renderDescription(origem, destino, local),
@@ -67,46 +70,50 @@ export default function Order() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Timeline
-        style={styles.list}
-        data={data}
-        descriptionStyle={styles.description}
-        separator={true}
-        lineColor="gray"
-        timeStyle={styles.time}
-        circleColor="#F45B69"
-        innerCircle={"dot"}
-        circleSize={18}
-        options={{ paddingTop: 5 }}
-        columnFormat={"single-column-left"}
-      />
-    </View>
+    <>
+      <Container>
+        <View style={styles.logo}>
+          <Image source={logoLight} />
+        </View>
+        <Timeline
+          style={styles.list}
+          data={data}
+          separator={true}
+          lineColor='#F45B69'
+          timeStyle={styles.time}
+          circleColor='#F45B69'
+          innerCircle={'dot'}
+          circleSize={18}
+          options={{ paddingTop: 5 }}
+          columnFormat={'single-column-left'}
+          titleStyle={styles.title}
+          separatorStyle={styles.separator}
+        />
+      </Container>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    paddingTop: 65,
-    backgroundColor: "white",
-  },
   list: {
     flex: 1,
     marginTop: 20,
   },
   time: {
-    flexDirection: "column",
-    textAlign: "center",
-    backgroundColor: "gray",
     fontSize: 12,
-    color: "white",
+    color: 'rgba(244,255,255, 0.8)',
     padding: 5,
-    borderRadius: 5,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
-  description: {
-    color: "gray",
+  title: {
+    color: 'rgba(244,255,255, 1)',
+    marginBottom: 10,
+  },
+  logo: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  separator: {
+    backgroundColor: 'rgba(244,91,105, 0.3)',
   },
 });

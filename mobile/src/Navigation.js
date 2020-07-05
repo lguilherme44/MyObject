@@ -1,20 +1,21 @@
-import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign, FontAwesome5 } from "@expo/vector-icons";
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import HomeScreen from "./screens/Home";
-import OrdersScreen from "./screens/Order";
+import { AntDesign, FontAwesome5 } from '@expo/vector-icons';
+
+import HomeScreen from './screens/Home';
+import OrdersScreen from './screens/Order';
 
 const Tab = createBottomTabNavigator();
 
 const icons = {
   Home: {
     lib: AntDesign,
-    name: "home",
+    name: 'home',
   },
   Order: {
     lib: FontAwesome5,
-    name: "box-open",
+    name: 'box-open',
   },
 };
 
@@ -29,25 +30,25 @@ export default function Navigation() {
       })}
       tabBarOptions={{
         style: {
-          backgroundColor: "#131418",
-          borderTopColor: "rgba(255,255,255, 0.2)",
+          backgroundColor: '#131418',
+          borderTopColor: 'rgba(255,255,255, 0.2)',
         },
-        activeTintColor: "#FFF",
-        inactiveTintColor: "#92929c",
+        activeTintColor: '#FFF',
+        inactiveTintColor: '#92929c',
       }}
     >
       <Tab.Screen
-        name="Home"
+        name='Home'
         component={HomeScreen}
         options={{
-          title: "Inicio",
+          title: 'Inicio',
         }}
       />
       <Tab.Screen
-        name="Order"
+        name='Order'
         component={OrdersScreen}
         options={{
-          title: "Encomendas",
+          title: 'Encomendas',
         }}
       />
     </Tab.Navigator>
