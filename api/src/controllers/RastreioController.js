@@ -1,11 +1,8 @@
-import { RastreioBrasil } from "correios-brasil";
+import { rastrearEncomendas  } from "correios-brasil";
 
 class RastreioController {
   async show(req, res) {
-    const correios = new RastreioBrasil();
-
-    correios
-      .rastrearEncomendas([req.params.codigo])
+      rastrearEncomendas([req.params.codigo])
       .then((response) => {
         res.status(200).send({ response });
       })
